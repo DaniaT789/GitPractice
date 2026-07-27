@@ -1,1 +1,1 @@
-This line was edited in main branch. 
+This line was edited in both branches and merged successfully. 
