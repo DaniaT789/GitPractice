@@ -1,0 +1,46 @@
+name: Website CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check index.html
+        run: |
+          if [ -f index.html ]; then
+            echo "index.html exists"
+          else
+            echo "index.html is missing"
+            exit 1
+          fi
+
+      - name: Check style.css
+        run: |
+          if [ -f style.css ]; then
+            echo "style.css exists"
+          else
+            echo "style.css is missing"
+            exit 1
+          fi
+
+      - name: Check HTML structure
+        run: |
+          grep -qi "<html" index.html
+          grep -qi "<head" index.html
+          grep -qi "<body" index.html
+          echo "HTML structure looks good"
+
+      - name: CI completed
+        run: echo "Website CI checks passed successfully!"
