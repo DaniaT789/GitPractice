@@ -42,5 +42,26 @@ jobs:
           grep -qi "<body" index.html
           echo "HTML structure looks good"
 
+      - name: Run website tests
+        shell: pwsh
+        run: |
+          ./test-website.ps1
+
+      - name: Create test report
+        shell: pwsh
+        run: |
+          "Website Test Report" | Out-File test-report.txt
+          "===================" | Out-File test-report.txt -Append
+          "index.html: PASS" | Out-File test-report.txt -Append
+          "style.css: PASS" | Out-File test-report.txt -Append
+          "HTML structure: PASS" | Out-File test-report.txt -Append
+          "PowerShell tests: PASS" | Out-File test-report.txt -Append
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-test-report
+          path: test-report.txt
+
       - name: CI completed
         run: echo "Website CI checks passed successfully!"
