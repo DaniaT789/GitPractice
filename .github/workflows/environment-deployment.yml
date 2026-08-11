@@ -1,0 +1,34 @@
+name: Environment Deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  development:
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+
+    steps:
+      - name: Development deployment
+        run: |
+          echo "================================"
+          echo "Development Environment"
+          echo "================================"
+          echo "Application tested successfully."
+          echo "Ready for production."
+
+  production:
+    needs: development
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+
+    steps:
+      - name: Production deployment
+        run: |
+          echo "================================"
+          echo "Production Environment"
+          echo "================================"
+          echo "Production deployment approved."
+          echo "Application deployed successfully."
