@@ -1,53 +1,13 @@
-name: Reusable Website Test
+name: Call Reusable Workflow
 
 on:
-  workflow_call:
-    inputs:
-      environment:
-        description: "Deployment environment"
-        required: true
-        type: string
-
-      test_type:
-        description: "Type of test"
-        required: true
-        type: string
-
-      message:
-        description: "Custom message"
-        required: false
-        type: string
-        default: "No message provided"
+  workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  website-test:
+    uses: ./.github/workflows/reusable-test.yml
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Show inputs
-        run: |
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Test Type: ${{ inputs.test_type }}"
-          echo "Message: ${{ inputs.message }}"
-
-      - name: Check website files
-        run: |
-          if [ -f index.html ]; then
-            echo "index.html exists"
-          else
-            echo "index.html missing"
-            exit 1
-          fi
-
-          if [ -f style.css ]; then
-            echo "style.css exists"
-          else
-            echo "style.css missing"
-            exit 1
-          fi
-
-      - name: Test completed
-        run: echo "Reusable workflow completed successfully"
+    with:
+      environment: production
+      test_type: website
+      message: "Day 23 input testing completed"
