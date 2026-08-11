@@ -1,0 +1,57 @@
+name: Website Deployment Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build website
+        run: |
+          echo "Building website..."
+          echo "Build completed successfully"
+
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: |
+          echo "Running website tests..."
+
+          if [ -f index.html ]; then
+            echo "index.html exists"
+          else
+            exit 1
+          fi
+
+          if [ -f style.css ]; then
+            echo "style.css exists"
+          else
+            exit 1
+          fi
+
+          echo "Tests passed"
+
+
+  deploy:
+    needs: test
+    if: success()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy website
+        run: |
+          echo "Deploying website..."
+          echo "Deployment successful"
