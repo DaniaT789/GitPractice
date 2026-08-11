@@ -4,31 +4,31 @@ on:
   workflow_dispatch:
 
 jobs:
+
   development:
     runs-on: ubuntu-latest
-    environment:
-      name: development
 
     steps:
       - name: Development deployment
-        run: |
-          echo "================================"
-          echo "Development Environment"
-          echo "================================"
-          echo "Application tested successfully."
-          echo "Ready for production."
+        run: echo "Development deployment completed"
+
 
   production:
     needs: development
     runs-on: ubuntu-latest
+
     environment:
       name: production
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use production secret
+        run: |
+          echo "Production deployment started"
+          echo "Secret is configured"
+
       - name: Production deployment
         run: |
-          echo "================================"
-          echo "Production Environment"
-          echo "================================"
-          echo "Production deployment approved."
-          echo "Application deployed successfully."
+          echo "Deploying to production..."
