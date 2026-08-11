@@ -2,6 +2,22 @@ name: Reusable Website Test
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        description: "Deployment environment"
+        required: true
+        type: string
+
+      test_type:
+        description: "Type of test"
+        required: true
+        type: string
+
+      message:
+        description: "Custom message"
+        required: false
+        type: string
+        default: "No message provided"
 
 jobs:
   test:
@@ -10,6 +26,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Show workflow inputs
+        run: |
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Test Type: ${{ inputs.test_type }}"
+          echo "Message: ${{ inputs.message }}"
 
       - name: Check website files
         run: |
@@ -28,4 +50,4 @@ jobs:
           fi
 
       - name: Test completed
-        run: echo "Reusable workflow test passed"
+        run: echo "Reusable workflow completed successfully"
