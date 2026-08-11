@@ -1,0 +1,31 @@
+name: Reusable Website Test
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check website files
+        run: |
+          if [ -f index.html ]; then
+            echo "index.html exists"
+          else
+            echo "index.html missing"
+            exit 1
+          fi
+
+          if [ -f style.css ]; then
+            echo "style.css exists"
+          else
+            echo "style.css missing"
+            exit 1
+          fi
+
+      - name: Test completed
+        run: echo "Reusable workflow test passed"
