@@ -6,3 +6,8 @@ on:
 jobs:
   website-test:
     uses: ./.github/workflows/reusable-test.yml
+
+    with:
+      environment: production
+      test_type: website
+      message: "Day 23 input testing completed"
